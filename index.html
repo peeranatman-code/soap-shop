@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ร้านสบู่สมุนไพรธรรมชาติ - สั่งซื้อออนไลน์</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-emerald-700 text-white py-6 shadow-md">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h1 class="text-3xl font-bold">🌿 สบู่สมุนไพรธรรมชาติแท้ 100%</h1>
+      <p class="mt-2 text-emerald-100">อ่อนโยนต่อผิว ลดสิว ผิวกระจ่างใส พร้อมจัดส่งทั่วประเทศ</p>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <!-- แสดงสินค้า 2 SKUs (ดึงรูปจากโฟลเดอร์ images ใน GitHub) -->
+    <h2 class="text-2xl font-bold mb-6 text-center">เลือกสูตรสบู่ที่เหมาะกับคุณ</h2>
+    <div class="grid md:grid-cols-2 gap-6 mb-10">
+      
+      <!-- SKU 1 -->
+      <div class="bg-white rounded-xl shadow p-5 border border-stone-200 flex flex-col justify-between">
+        <div>
+          <img src="./images/soap1.jpg" alt="สบู่สูตรน้ำผึ้งขมิ้น" class="w-full h-56 object-cover rounded-lg mb-4 bg-stone-200">
+          <span class="text-xs font-semibold bg-amber-100 text-amber-800 px-2.5 py-1 rounded">SKU: SOAP-001</span>
+          <h3 class="text-xl font-bold mt-2">สบู่สมุนไพรน้ำผึ้งขมิ้น</h3>
+          <p class="text-stone-600 text-sm mt-1">ช่วยลดสิว ฝ้า จุดด่างดำ ให้ผิวเนียนนุ่มชุ่มชื้น (ขนาด 100g)</p>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-2xl font-bold text-emerald-700">฿120</span>
+          <button onclick="selectProduct('SOAP-001', 'สบู่สมุนไพรน้ำผึ้งขมิ้น', 120)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+            เลือกสูตรนี้
+          </button>
+        </div>
+      </div>
+
+      <!-- SKU 2 -->
+      <div class="bg-white rounded-xl shadow p-5 border border-stone-200 flex flex-col justify-between">
+        <div>
+          <img src="./images/soap2.jpg" alt="สบู่สูตรใบบัวบกชาเขียว" class="w-full h-56 object-cover rounded-lg mb-4 bg-stone-200">
+          <span class="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded">SKU: SOAP-002</span>
+          <h3 class="text-xl font-bold mt-2">สบู่สูตรใบบัวบกชาเขียว</h3>
+          <p class="text-stone-600 text-sm mt-1">ปลอบประโลมผิว ลดการอักเสบ คุมความมันส่วนเกิน (ขนาด 100g)</p>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-2xl font-bold text-emerald-700">฿150</span>
+          <button onclick="selectProduct('SOAP-002', 'สบู่สูตรใบบัวบกชาเขียว', 150)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+            เลือกสูตรนี้
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ฟอร์มสั่งซื้อสินค้า -->
+    <div id="order-section" class="bg-white rounded-xl shadow-md p-6 md:p-8 border border-stone-200">
+      <h2 class="text-2xl font-bold mb-4 text-emerald-800">📦 กรอกข้อมูลสั่งซื้อและจัดส่ง</h2>
+      <form id="orderForm" class="space-y-4">
+        
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">เลือกสินค้า (SKU) *</label>
+            <select id="skuSelect" onchange="calculateTotal()" class="w-full border border-stone-300 rounded-lg p-2.5" required>
+              <option value="SOAP-001" data-name="สบู่สมุนไพรน้ำผึ้งขมิ้น" data-price="120">SOAP-001 : สบู่สมุนไพรน้ำผึ้งขมิ้น (120 บาท)</option>
+              <option value="SOAP-002" data-name="สบู่สูตรใบบัวบกชาเขียว" data-price="150">SOAP-002 : สบู่สูตรใบบัวบกชาเขียว (150 บาท)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">จำนวน (ก้อน) *</label>
+            <input type="number" id="quantity" value="1" min="1" onchange="calculateTotal()" oninput="calculateTotal()" class="w-full border border-stone-300 rounded-lg p-2.5" required>
+          </div>
+        </div>
+
+        <div class="bg-emerald-50 p-3 rounded-lg text-right font-bold text-lg text-emerald-900">
+          ยอดชำระรวม: <span id="totalPriceDisplay">120</span> บาท
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">ชื่อ-นามสกุล ผู้รับ *</label>
+            <input type="text" id="customerName" placeholder="เช่น นายสมชาย ใจดี" class="w-full border border-stone-300 rounded-lg p-2.5" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">เบอร์โทรศัพท์ *</label>
+            <input type="tel" id="phone" placeholder="เช่น 0812345678" class="w-full border border-stone-300 rounded-lg p-2.5" required>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">ที่อยู่จัดส่ง (สำหรับจ่าหน้าพัสดุ) *</label>
+          <textarea id="address" rows="3" placeholder="บ้านเลขที่ หมู่ ซอย ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด รหัสไปรษณีย์" class="w-full border border-stone-300 rounded-lg p-2.5" required></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
+          ยืนยันการสั่งซื้อ
+        </button>
+      </form>
+
+      <!-- กล่องแสดงใบจ่าหน้าพัสดุตัวอย่างหลังสั่งซื้อเสร็จ -->
+      <div id="successBox" class="hidden mt-6 p-5 bg-green-50 border border-green-300 rounded-lg">
+        <h3 class="text-lg font-bold text-green-800">✅ บันทึกคำสั่งซื้อลง Google Sheet สำเร็จ!</h3>
+        <p class="text-sm text-green-700 mt-1">ข้อมูลสำหรับพนักงานหยิบสินค้า แพ็คสินค้า และจ่าหน้าพัสดุ:</p>
+        <pre id="labelPreview" class="mt-3 p-3 bg-white border border-dashed border-stone-400 rounded text-sm whitespace-pre-wrap font-mono"></pre>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // *** นำ URL ของ Google Apps Script Web App มาวางแทนที่ข้อความในเครื่องหมายคำพูดด้านล่าง ***
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwzTRqo2hBq6-cfNYawSB3BWaBevX4_oo6UtY_VZLmAVtUhNQAQzbWkqhMNaXM7IHZs9g/exec";
+
+    function selectProduct(sku, name, price) {
+      document.getElementById('skuSelect').value = sku;
+      calculateTotal();
+      document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function calculateTotal() {
+      const select = document.getElementById('skuSelect');
+      const price = Number(select.options[select.selectedIndex].getAttribute('data-price'));
+      const qty = Number(document.getElementById('quantity').value) || 1;
+      document.getElementById('totalPriceDisplay').innerText = price * qty;
+    }
+
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerText = "กำลังบันทึกข้อมูล...";
+
+      const select = document.getElementById('skuSelect');
+      const sku = select.value;
+      const productName = select.options[select.selectedIndex].getAttribute('data-name');
+      const quantity = document.getElementById('quantity').value;
+      const totalPrice = document.getElementById('totalPriceDisplay').innerText;
+      const customerName = document.getElementById('customerName').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+
+      const payload = { sku, productName, quantity, totalPrice, customerName, phone, address };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('successBox').classList.remove('hidden');
+        document.getElementById('labelPreview').innerText = 
+          รหัสออเดอร์: ${data.orderId}\n +
+          รายการหยิบ/แพ็ค: [${sku}] ${productName} จำนวน ${quantity} ชิ้น\n +
+          ----------------------------------------\n +
+          `จ่าหน้าพัสดุถึง:\nคุณ ${customerName} (โทร: ${phone})\n${address}`;
+        
+        document.getElementById('orderForm').reset();
+        calculateTotal();
+        btn.disabled = false;
+        btn.innerText = "ยืนยันการสั่งซื้อ";
+      })
+      .catch(err => {
+        alert("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาตรวจสอบ URL ของ Apps Script");
+        btn.disabled = false;
+        btn.innerText = "ยืนยันการสั่งซื้อ";
+      });
+    });
+  </script>
+</body>
+</html>
